@@ -1,4 +1,4 @@
-%clear all;close all;clc;
+clear all;close all;clc;
 
 % System specific data
 sys_data.ato_mol = 18;  % number of atoms per molecule
@@ -48,7 +48,7 @@ end
 
 
 % Angular distribution
-if true
+if false
     
     vector_indices = [8;9];
     
