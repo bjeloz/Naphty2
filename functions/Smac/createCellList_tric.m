@@ -1,9 +1,14 @@
-function [ cellList, cellNums, cellMols] = createCellList_tric( centers, box_dim, rcut )
+function [ cellList, cellNums, cellMols] = createCellList_tric( centers, box_top, rcut )
 % creates the cell list for the speedup of CV calculation
 % r_cut corresponds to the list cutting distance and not the CV r_cut one
 
-[T, a, b, c] = fractionalCoordinates(box_dim);
+% get box properties
+T = box_top.T;
+a = box_top.a;
+b = box_top.b;
+c = box_top.c;
 
+% get number for cells for all three spacial directions
 cellNums = [floor(a(1)/rcut), floor(b(2)/rcut), floor(c(3)/rcut)];
 
 meshx = linspace(-0.0001, 1, cellNums(1)+1);
@@ -31,12 +36,8 @@ for i=1:length(centers)
     cell_abc(2) = sum(rFrac(2)>meshy(:));
     cell_abc(3) = sum(rFrac(3)>meshz(:));
     
-%     cellNr = cell_abc(1) + (cell_abc(2)-1)*cellNums(1) ...
-%         + (cell_abc(3)-1)*cellNums(1)*cellNums(2);
-    
     cellNr = index3Dto1D(cell_abc, cellNums);
     
-    %particleList(i,:) = [ centers(i,:) , cellNr ];
     cellList(i) = cellNr;
 end
 

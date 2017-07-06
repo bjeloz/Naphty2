@@ -16,7 +16,7 @@ for i=1:N-1
         end
         
         % update histogram:
-        binIndex = ceil(angle/step_size);
+        binIndex = round(angle/step_size + 0.5);
         histogram(binIndex) = histogram(binIndex) + 1;
     end
 end
