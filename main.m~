@@ -76,7 +76,7 @@ if true
     % Vector [8;9]
     smac_data.center_indices = [8; 9];
     smac_data.vector_indices = [8; 9];
-    smac_data.r_cut = 0.65;
+    smac_data.r_cut = 0.75;
     smac_data.r_cell = 1.2*smac_data.r_cut;  % cut-off distance of cell list
     smac_data.n_cut = 4;
     %smac_data.phi_0 = [0; 0.99];  % we just need to write the vector angle values below pi/2
