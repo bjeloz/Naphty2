@@ -14,7 +14,7 @@ function [ X, gR ] = RadialDistribution( centers, box_top, step_size )
     % Density:
     rho = N / V;
 
-    % histogram of the radial distribution function:
+    % histogram of the radial distribution function
     histogram = zeros(ceil(radius/step_size) + 1, 1);
 
     for i=1:N-1

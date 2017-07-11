@@ -4,10 +4,11 @@ function [ s ] = Smac( gro_ato, box_dim, sys_data, smac_data )
     % CV specifications
     center_indices = smac_data.center_indices;
     vector_indices = smac_data.vector_indices;
-    rcut = smac_data.rcut;
-    ncut = smac_data.ncut;
-    phi0 = smac_data.phi0;
-    sigma0 = smac_data.sigma0;
+    r_cut = smac_data.rcut;
+    r_cell = smac_data.rcell;
+    n_cut = smac_data.ncut;
+    phi_0 = smac_data.phi0;
+    sigma_0 = smac_data.sigma0;
     a = smac_data.a;
     b = smac_data.b;
 
@@ -28,29 +29,29 @@ function [ s ] = Smac( gro_ato, box_dim, sys_data, smac_data )
     N = length(centers);
 
     % Get triclinic cell list
-    [cellList, cellNums] = createCellList_tric(centers, box_top, 1.2*rcut);
+    [cellList, cellNums] = createCellList_tric(centers, box_top, r_cell);
 
     s = zeros(N,1);
 
     verletList = zeros(N, 10);
     for i=1:N
-        neighborList = cellNeighbors(i, centers, cellList, cellNums);
+        neighborList = cellNeighbors(i, cellList, cellNums);
 
         % get vectors for angles
         v0 = VectorsCellList(gro_ato, i, sys_data, box_top, vector_indices);
         v_i = VectorsCellList(gro_ato, neighborList, sys_data, box_top, vector_indices);
 
         phi_i = zeros(length(neighborList),1);
-        for k=1:length(phi0)
+        for k=1:length(phi_0)
             phi_ij = vectorAngle(repmat(v0, length(neighborList), 1)', v_i');
             phi_ij = min(phi_ij, pi-phi_ij);
-            phi_i = phi_i + min(1, bell(phi_ij, phi0(k), sigma0(k))');
+            phi_i = phi_i + min(1, bell(phi_ij, phi_0(k), sigma_0(k))');
         end
 
         f_i = zeros(length(neighborList),1);
         for j=1:length(f_i)
             r_ij = VectorPBC(centers(i,:), centers(neighborList(j),:), box_top);
-            f_i(j) = rationalSWF(r_ij, rcut, a, b);
+            f_i(j) = rationalSWF(r_ij, r_cut, a, b);
             if f_i(j)>0.5
                 verletList(i,1) = verletList(i,1) + 1;
                 verletList(i, verletList(i,1)+1) = neighborList(j);
@@ -58,7 +59,7 @@ function [ s ] = Smac( gro_ato, box_dim, sys_data, smac_data )
         end
 
         n_i = sum(f_i);
-        rho_i = rationalSWF(n_i, ncut, -a, -b);
+        rho_i = rationalSWF(n_i, n_cut, -a, -b);
 
         s(i) = rho_i/n_i * sum(f_i.*phi_i);
     end

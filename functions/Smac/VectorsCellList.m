@@ -1,6 +1,6 @@
 function [ vectors ] = VectorsCellList( gro_ato, list_indices, sys_data, box_top, vector_indices )
-% same as Vectors.m, but the algorithm allows for picking certain molecules
-% from a given cell of the cell List
+    % same as Vectors.m, but the algorithm allows for picking certain molecules
+    % from a given cell of the cell List
 
     % get number of atoms per molecule
     ato_mol = sys_data.ato_mol;
