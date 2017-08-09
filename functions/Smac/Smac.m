@@ -20,7 +20,6 @@ function [ s ] = Smac( gro_ato, box_dim, sys_data, smac_data )
 
     % Vector angle function
     vectorAngle = @(v1, v2) acos(dot(v1, v2) ./ (sqrt(dot(v1,v1)).*sqrt(dot(v2,v2))));
-    %vectorAngle = @(v1, v2) acos(dot(v1, v2) ./ (norm(v1,v1).*norm(v2,v2)));
     
     % Get simulation box properties
     box_top = FractionalCoordinates(box_dim);
