@@ -1,5 +1,7 @@
 function [ vectors ] = Vectors( gro_ato, sys_data, box_top, vector_indices )
 
+    % Input: 
+
     % get number of atoms per molecule
     ato_mol = sys_data.ato_mol;
 

@@ -1,5 +1,11 @@
 function [ X, angleDistribution ] = AngleDistribution( vectors, step_size )
 
+% Function AngleDistribution needs following functions
+% for the calculation of the input:
+% -> FractionalCoordinates.m
+% -> Vectors.m
+% -> VectorPBC.m
+
 N = length(vectors);
 
 histogram = zeros(ceil(pi/step_size), 1);
