@@ -45,7 +45,7 @@ function [ s ] = Smac( gro_ato, box_dim, sys_data, smac_data )
         phi_i = zeros(length(neighborList),1);
         for k=1:length(phi_0)
             phi_ij = vectorAngle(repmat(v_0, length(neighborList), 1)', v_i');
-            %phi_ij = min(phi_ij, pi-phi_ij);
+            phi_ij = min(phi_ij, pi-phi_ij);
             phi_i = phi_i + min(1, bell(phi_ij, phi_0(k), sigma_0(k))');
         end
 
